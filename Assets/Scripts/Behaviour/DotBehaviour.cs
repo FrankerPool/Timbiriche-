@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DotBehaviour : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
+public class DotBehaviour : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler,IDeselectHandler
 {
     public GameObject lineLeft, lineRight, lineUp, lineDown;
     public List<GameObject> waysList;
@@ -13,7 +13,6 @@ public class DotBehaviour : MonoBehaviour, IPointerClickHandler, IPointerDownHan
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        print("collision dot");
         if (collision.gameObject.name.Contains("Dot"))
         {
             //en caso de ser verdad oculto uno de los dos
@@ -44,6 +43,15 @@ public class DotBehaviour : MonoBehaviour, IPointerClickHandler, IPointerDownHan
         if (hitRight.collider)
             activeGhostLine(lineLeft);
     }
+    public void hideAllWAlls()
+    {
+        for (int i = 0; i < waysList.Count; i++)
+        {
+            if (waysList[i].activeInHierarchy)
+                if (!waysList[i].GetComponent<WayBehaviour>().wayActive)
+                    waysList[i].SetActive(false);
+        }
+    }
     public void makeWall(GameObject line)
     {
         line.GetComponent<WayBehaviour>().wayActive = true;
@@ -63,7 +71,6 @@ public class DotBehaviour : MonoBehaviour, IPointerClickHandler, IPointerDownHan
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        OnClickDot();
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -72,6 +79,16 @@ public class DotBehaviour : MonoBehaviour, IPointerClickHandler, IPointerDownHan
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (GeneratorDots.generatorDotsInstance.currentDotSelected == null)
+        {
+            GeneratorDots.generatorDotsInstance.currentDotSelected = this.gameObject;
+        }
+        GeneratorDots.generatorDotsInstance.currentDotSelected.GetComponent<DotBehaviour>().hideAllWAlls();
+        GeneratorDots.generatorDotsInstance.currentDotSelected = this.gameObject;
+        OnClickDot();
+    }
 
+    public void OnDeselect(BaseEventData eventData)
+    {
     }
 }

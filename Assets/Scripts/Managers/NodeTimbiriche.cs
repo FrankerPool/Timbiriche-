@@ -2,32 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NodeTimbiriche : MonoBehaviour
 {
     public TextMeshProUGUI countLines;
-    public int wallInCube = 0;
-    public List<GameObject> dotsOfNode;
-    
+    public int countwallsInCube = 0;
+    public List<GameObject> wallsInCube;
+    public Image nodeImage;
+    public SpriteRenderer colorImageNode;
+    public void customizeNode(Sprite playerAvatar, Color32 colorPlayer)
+    {
+        nodeImage.sprite = playerAvatar;
+        colorImageNode.color = colorPlayer;
+    }
     public void addWallInCount()
     {
-        wallInCube++;
+        countwallsInCube++;
         updateCountTXT();
     }
     public void updateCountTXT()
     {
-        countLines.text = wallInCube.ToString();
+        countLines.text = countwallsInCube.ToString();
     }
-    public void addDot(GameObject dot)
+    public void addDot(GameObject wall)
     {
-        dotsOfNode.Add(dot);
+        wallsInCube.Add(wall);
     }
-    public void removeDot(GameObject dot)
+    public void removeDot(GameObject wall)
     {
-        dotsOfNode.Remove(dot);
+        wallsInCube.Remove(wall);
     }
     public void clearDotList()
     {
-        dotsOfNode.Clear();
+        wallsInCube.Clear();
     }
 }

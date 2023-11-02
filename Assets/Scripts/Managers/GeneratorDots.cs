@@ -7,14 +7,20 @@ public enum Size
 }
 public class GeneratorDots : MonoBehaviour
 {
+    public static GeneratorDots generatorDotsInstance;
     public Size sizeTimbiriche = Size.Short;
+    public GameObject currentDotSelected, prevDotSelected;
     public List<NodeTimbiriche> nodesMaze;
     public NodeTimbiriche prefabMazeNode;
     public int totalNumberOfCubes;
     public int currentNumberOfCubes;
+    private void Awake()
+    {
+        generatorDotsInstance = this;
+    }
     private void Start()
     {
-        StartCoroutine(generateDots(8));
+        generateDots(8);
     }
     public void setTotalNumberOfCubes(int total)
     {
@@ -24,7 +30,7 @@ public class GeneratorDots : MonoBehaviour
     {
         currentNumberOfCubes++;
     }
-    IEnumerator generateDots(int size)
+    public void generateDots(int size)
     {
         setTotalNumberOfCubes(size * size);
         //lista donde guardo los nodos temporalmente
@@ -41,7 +47,6 @@ public class GeneratorDots : MonoBehaviour
                 NodeTimbiriche newMazeNode = Instantiate(prefabMazeNode, nodePos, Quaternion.identity, transform);
                 nodes.Add(newMazeNode);
                 nodesMaze.Add(newMazeNode);
-                yield return null;
             }
         }
     }
