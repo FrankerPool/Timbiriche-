@@ -20,7 +20,6 @@ public class GeneratorDots : MonoBehaviour
     }
     private void Start()
     {
-        generateDots(8);
     }
     public void setTotalNumberOfCubes(int total)
     {

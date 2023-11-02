@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,17 +10,27 @@ public class GameManager : MonoBehaviour
     public List<PlayerDataInGame> dataPlayerInGame;
     public PlayerDataInGame currentPlayerData;
     public int currentTurn;
+    public GameObject canvasFinishGame;
     private void Awake()
     {
         gameManagerInstancie = this;
     }
     private void Start()
     {
-        initializedPlayersInfo();
+
+    }
+    public void finishGame()
+    {
+        canvasFinishGame.SetActive(true);
+    }
+    public void OnClickMenu()
+    {
+        SceneManager.LoadScene(0);
     }
     public void OnClickstartGame()
     {
         initializedPlayersInfo();
+        GeneratorDots.generatorDotsInstance.generateDots(8);
     }
     public void passTurn()
     {

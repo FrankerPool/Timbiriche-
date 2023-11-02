@@ -53,6 +53,8 @@ public class WayBehaviour : MonoBehaviour, IPointerClickHandler, IPointerDownHan
     }
     public void comprobateTurn()
     {
+        if (GeneratorDots.generatorDotsInstance.currentNumberOfCubes == GeneratorDots.generatorDotsInstance.totalNumberOfCubes)
+            GameManager.gameManagerInstancie.finishGame();
         if(numberOfCubesFinish<1)
             GameManager.gameManagerInstancie.comprobateTurn();
             GameManager.gameManagerInstancie.passTurn();
@@ -65,6 +67,7 @@ public class WayBehaviour : MonoBehaviour, IPointerClickHandler, IPointerDownHan
             {
                 GameManager.gameManagerInstancie.addPointsToCurrentPlayer();
                 numberOfCubesFinish++;
+                GeneratorDots.generatorDotsInstance.addCurrentTotalCubes();
                 cubesInfluence[i].gameObject.GetComponent<NodeTimbiriche>().customizeNode(
                     GameManager.gameManagerInstancie.currentPlayerData.playerData.playerIage,
                     GameManager.gameManagerInstancie.currentPlayerData.playerData.colorPlayer);
